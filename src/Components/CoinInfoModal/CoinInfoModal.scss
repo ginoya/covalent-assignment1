@@ -1,0 +1,15 @@
+.coin-info-container{
+    display: flex;
+    flex-wrap: wrap;
+    .coin-metric{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        .green-value{
+            color: green;
+        }
+        .red-value{
+            color: red;
+        }
+    }
+}

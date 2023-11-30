@@ -1,0 +1,26 @@
+.bookmark {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    width: calc((100% - 60px) / 4); /* 60px is the total gap space (20px * 3) */
+    height: 15rem;
+    background-color: lightgray;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+}
+
+.green {
+    background-color: green;
+}
+
+.red {
+    background-color: red;
+}
+
+.coin-name,
+.coin-price {
+    width: 100%;
+}
