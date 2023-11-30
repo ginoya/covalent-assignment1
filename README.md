@@ -5,7 +5,9 @@ Deployed website can be accessed at https://ginoya.github.io/covalent-assignment
 
 ## In Locall
 Clone repo from github https://github.com/ginoya/covalent-assignment1
+
 runcommand `yarn install` to install required depedency package
+
 run command `yarn start` to access local developement environment at http://localhost:3000
 
 # Development approach
@@ -21,4 +23,8 @@ Create constant file to maintain all configuarable variables at same place and a
 
 # Challenges encountered
 
-Faced challenge in preventing unrequire re-rendering of all bookmarks when removing a single bookmark. Resolved it by adding a key with map in AllBookmarks component.
+Faced challenge in preventing unnecessary re-rendering of all bookmarks when removing a single bookmark. Resolved it by adding a key with map in AllBookmarks component.
+
+
+# Note - 
+Current application is developed to stop fetching live data automatically after 30 minutes to prevent exhausting API rate limit
