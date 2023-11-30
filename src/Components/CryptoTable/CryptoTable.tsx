@@ -6,18 +6,20 @@ import { setBookmark } from "../../Redux/BookmarkReducer/bookmarkActions";
 import { columns } from "../../Utils/constants";
 import { setActiveCoinData, toggleCoinInfoModal } from "../../Redux/CoinInfoReducer/CoinInfoAction";
 import './CryptoTable.scss'
+import { IState } from "../../store";
+import { ProgressSpinner } from "primereact/progressspinner";
 
 function CryptoTable() {
 
-    const CrypotData = useSelector((state: any) => state.tableData);
-    const bookmarks = useSelector((state: any) => state.bookmark.bookmarks);
+    const CrypotData = useSelector((state: IState) => state.tableData);
+    const bookmarks = useSelector((state: IState) => state.bookmark.bookmarks);
 
     const dispatch = useDispatch();
 
     const renderBookmarkCell = (coin: any) => {
         return <Checkbox onChange={e => handleOnChangeCheck(e.checked, coin)} checked={bookmarks.includes(coin.coinName)}></Checkbox>
     }
-    
+
     const renderCoinCell = (coin: any) => {
         return <div onClick={() => handleCoinNameClick(coin)} className="coin-name-cell">{coin.coinName}</div>
     }
@@ -32,19 +34,22 @@ function CryptoTable() {
         }
     }
 
-    const handleCoinNameClick = (coin:any) => {
+    const handleCoinNameClick = (coin: any) => {
         dispatch(toggleCoinInfoModal(true))
-        dispatch(setActiveCoinData({...coin}))
+        dispatch(setActiveCoinData({ ...coin }))
     }
 
     return (
-        <DataTable value={CrypotData.tableData} showGridlines tableStyle={{ "marginTop": "2.5rem" }}>
-            <Column align={"center"} field="coinName" header={"Coin Name"} body={renderCoinCell}></Column>
-            {columns.map(({ field, header }) =>
-                <Column key={field} field={field} header={header}></Column>
-            )}
-            <Column align={"center"} header={"Bookmark"} body={renderBookmarkCell}></Column>
-        </DataTable>
+        CrypotData.isLoading ?
+            <ProgressSpinner />
+            :
+            <DataTable value={CrypotData.tableData} showGridlines tableStyle={{ "marginTop": "2.5rem" }}>
+                <Column align={"center"} field="coinName" header={"Coin Name"} body={renderCoinCell}></Column>
+                {columns.map(({ field, header }) =>
+                    <Column key={field} field={field} header={header}></Column>
+                )}
+                <Column align={"center"} header={"Bookmark"} body={renderBookmarkCell}></Column>
+            </DataTable>
 
     );
 }

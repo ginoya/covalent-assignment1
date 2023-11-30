@@ -2,14 +2,19 @@ import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { clearIntervalAfter, coinRefreshInterval, currentcySymbol, getCoinPriceUrl } from '../../Utils/constants';
 import './SingleBookmark.scss';
+import { useSelector } from 'react-redux';
+import { IState } from '../../store';
+import { getInitialPriceFromTable } from '../../Utils/shared';
 
 interface IBookmark {
     coinName: string
 }
 
 const SingleBookmark = React.memo(({ coinName }: IBookmark) => {
-    const [currentPrice, setCurrentPrice] = useState(0);
-    const previousPriceRef = useRef<number | null>(null);
+
+    const tableData = useSelector((state: IState) => state.tableData.tableData)
+    const [currentPrice, setCurrentPrice] = useState(getInitialPriceFromTable(tableData, coinName));
+    const previousPriceRef = useRef<number>(0);
 
     useEffect(() => {
         const fetchSingleCoinData = async () => {
@@ -27,17 +32,16 @@ const SingleBookmark = React.memo(({ coinName }: IBookmark) => {
             }
         };
         fetchSingleCoinData()
-        
+
         let intervalId = setInterval(() => {
 
-                fetchSingleCoinData();
-        },coinRefreshInterval);
+            fetchSingleCoinData();
+        }, coinRefreshInterval);
 
-         // Automatically clear the interval after 30 minutes
-         const timeoutId = setTimeout(() => {
+        // Automatically clear the interval after 30 minutes
+        const timeoutId = setTimeout(() => {
             clearInterval(intervalId);
-            console.log('setTimeout called');
-        }, clearIntervalAfter) 
+        }, clearIntervalAfter)
 
         return () => {
             clearInterval(intervalId);
@@ -45,12 +49,10 @@ const SingleBookmark = React.memo(({ coinName }: IBookmark) => {
         }
     }, [coinName]);
 
-    const getBgColor = () => {
-        if (typeof previousPriceRef.current === 'number')
-            return currentPrice > previousPriceRef.current ? 'green' : 'red';
-    }
+    const getBgColor = () =>
+        currentPrice >= previousPriceRef.current ? 'green' : 'red';
 
-return <div className={`bookmark ${getBgColor()}`} >
+    return <div className={`bookmark ${getBgColor()}`} >
         <div className='coin-name'>{coinName}</div>
         <div className='coin-price'>{`${currentcySymbol} ${currentPrice}`}</div>
     </div>

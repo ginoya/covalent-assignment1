@@ -44,3 +44,9 @@ export const formatCryptoTableData = (res: AxiosResponse<any, any>) => {
         return [];
     }
 }
+
+export const getInitialPriceFromTable = (tableData:ICoinMetrices[],coinName:string) =>{
+    const selectedCoinPrice = tableData.find(coin => coin.coinName === coinName)?.price;
+    const numericString = selectedCoinPrice?.replace(/[^0-9.]/g, '');
+    return parseFloat(numericString!!)
+}
