@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/covalent-assignment1/static/css/main.9eb361af.css",
-    "main.js": "/covalent-assignment1/static/js/main.b999f872.js",
+    "main.js": "/covalent-assignment1/static/js/main.fafa7cb3.js",
     "static/js/787.d17be737.chunk.js": "/covalent-assignment1/static/js/787.d17be737.chunk.js",
     "static/media/Inter-italic.var.woff2?v=3.19": "/covalent-assignment1/static/media/Inter-italic.var.30807be7abc48ba8c73c.woff2",
     "static/media/Inter-roman.var.woff2?v=3.19": "/covalent-assignment1/static/media/Inter-roman.var.ba4caefcdf5b36b438db.woff2",
     "index.html": "/covalent-assignment1/index.html",
     "main.9eb361af.css.map": "/covalent-assignment1/static/css/main.9eb361af.css.map",
-    "main.b999f872.js.map": "/covalent-assignment1/static/js/main.b999f872.js.map",
+    "main.fafa7cb3.js.map": "/covalent-assignment1/static/js/main.fafa7cb3.js.map",
     "787.d17be737.chunk.js.map": "/covalent-assignment1/static/js/787.d17be737.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.9eb361af.css",
-    "static/js/main.b999f872.js"
+    "static/js/main.fafa7cb3.js"
   ]
 }
