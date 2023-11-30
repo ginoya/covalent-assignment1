@@ -39,6 +39,7 @@ const SingleBookmark = React.memo(({ coinName }: IBookmark) => {
         }, coinRefreshInterval);
 
         // Automatically clear the interval after 30 minutes
+        
         const timeoutId = setTimeout(() => {
             clearInterval(intervalId);
         }, clearIntervalAfter)

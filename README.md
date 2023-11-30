@@ -1,46 +1,24 @@
-# Getting Started with Create React App
+# Step to Run Aplication
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Deployed website
+Deployed website can be accessed at https://ginoya.github.io/covalent-assignment1/
 
-## Available Scripts
+## In Locall
+Clone repo from github https://github.com/ginoya/covalent-assignment1
+runcommand `yarn install` to install required depedency package
+run command `yarn start` to access local developement environment at http://localhost:3000
 
-In the project directory, you can run:
+# Development approach
+Splitted required main page in to three major component CryptoTable, AllBookmarks and CoinInfoModal
 
-### `npm start`
+Divided above three component into smaller component to maintain modulariy and increase reusability
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Created separate reducers for all three main components keeping in mind the possibility of adding new features 
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Created shared Utils file to handle reusable function which might be need in other components as well 
 
-### `npm test`
+Create constant file to maintain all configuarable variables at same place and avoid hard coding at in all other files
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# Challenges encountered
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Faced challenge in preventing unrequire re-rendering of all bookmarks when removing a single bookmark. Resolved it by adding a key with map in AllBookmarks component.
