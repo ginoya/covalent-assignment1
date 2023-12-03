@@ -17,9 +17,9 @@ Divided above three component into smaller component to maintain modulariy and i
 
 Created separate reducers for all three main components keeping in mind the possibility of adding new features 
 
-Created shared Utils file to handle reusable function which might be need in other components as well 
+Created shared Utils file to handle reusable function which might be needed in other components as well 
 
-Create constant file to maintain all configuarable variables at same place and avoid hard coding at in all other files
+Created constant file to maintain all configuarable variables at same place and avoid hard coding at in all other files
 
 # Challenges encountered
 
