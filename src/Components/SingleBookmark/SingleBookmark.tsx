@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
-import { clearIntervalAfter, coinRefreshInterval, currentcySymbol, getCoinPriceUrl } from '../../Utils/constants';
+import { clearIntervalAfter, coinRefreshInterval, getCoinPriceUrl, getDefaultCurrency } from '../../Utils/constants';
 import './SingleBookmark.scss';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { IState } from '../../store';
 import { getInitialPriceFromTable } from '../../Utils/shared';
+import { setSavedCoinPrices } from '../../Redux/BookmarkReducer/bookmarkActions';
 
 interface IBookmark {
     coinName: string
@@ -13,24 +14,32 @@ interface IBookmark {
 const SingleBookmark = React.memo(({ coinName }: IBookmark) => {
 
     const tableData = useSelector((state: IState) => state.tableData.tableData)
-    const [currentPrice, setCurrentPrice] = useState(getInitialPriceFromTable(tableData, coinName));
-    const previousPriceRef = useRef<number>(0);
+    const defaultCurrency  = useSelector((state:IState)=> state.tableData.savedCurrency)
+    const savedPrices = useSelector((state:IState) => state.bookmark.savedCoinValue);
+
+    const dispatch = useDispatch()
+    const fetchSingleCoinData = async () => {
+        try {
+            axios.get(`${getCoinPriceUrl}?fsym=${coinName}&tsyms=${defaultCurrency}`)
+                .then(res => {
+                    dispatch(setSavedCoinPrices({
+                        ...savedPrices,
+                        [coinName]:{
+                            previous:savedPrices[coinName]?.current ,
+                            current:res.data[defaultCurrency]
+                        }
+                    }))
+                })
+                .catch(err => {
+                    console.log(err.err)
+                })
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
 
     useEffect(() => {
-        const fetchSingleCoinData = async () => {
-            try {
-                axios.get(`${getCoinPriceUrl}?fsym=${coinName}&tsyms=${currentcySymbol}`)
-                    .then(res => {
-                        previousPriceRef.current = currentPrice;
-                        setCurrentPrice(res.data[currentcySymbol])
-                    })
-                    .catch(err => {
-                        console.log(err.err)
-                    })
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
+
         fetchSingleCoinData()
 
         let intervalId = setInterval(() => {
@@ -48,14 +57,28 @@ const SingleBookmark = React.memo(({ coinName }: IBookmark) => {
             clearInterval(intervalId);
             clearTimeout(timeoutId);
         }
-    }, [coinName]);
+    }, [coinName,defaultCurrency]);
 
-    const getBgColor = () =>
-        currentPrice >= previousPriceRef.current ? 'green' : 'red';
+    const getBgColor = () =>{
+        if(!savedPrices[coinName]?.previous){
+            if( savedPrices[coinName]?.current >= getInitialPriceFromTable(tableData,coinName))
+            return 'green'
+            else return 'red'
+        }
+        if(savedPrices[coinName]?.current && savedPrices[coinName]?.previous){
+            if( savedPrices[coinName]?.current >= savedPrices[coinName]?.previous)
+            return 'green'
+            else return 'red'
+        }else{
+            return ''
+        }
+           
+    }
 
+    console.log(coinName, savedPrices)
     return <div className={`bookmark ${getBgColor()}`} >
         <div className='coin-name'>{coinName}</div>
-        <div className='coin-price'>{`${currentcySymbol} ${currentPrice}`}</div>
+        <div className='coin-price'>{`${defaultCurrency} ${savedPrices[coinName]?.current}`}</div>
     </div>
 })
 export default SingleBookmark

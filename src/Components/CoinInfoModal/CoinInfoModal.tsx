@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux"
 import { resetActiveCoinData, toggleCoinInfoModal } from "../../Redux/CoinInfoReducer/CoinInfoAction"
 import { coinMetrices } from "../../Utils/constants"
 import { getColorClass, getPercentageIcon } from "../../Utils/shared"
-import './CoinInfoModal.scss'
 import { IState } from "../../store"
+import './CoinInfoModal.scss'
 
 function CoinInfoModal() {
     const isModalOpen = useSelector((state: IState) => state.coinInfo.isModalOpen);

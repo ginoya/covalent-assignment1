@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux"
 import SingleBookmark from "../SingleBookmark/SingleBookmark"
-import './AllBookmarks.scss';
 import { IState } from "../../store";
+import './AllBookmarks.scss';
 
 
 

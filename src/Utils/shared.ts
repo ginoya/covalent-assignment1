@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios"
-import { IMetrics, currentcySymbol } from "./constants"
+import { IMetrics, currentcySymbol, getDefaultCurrency } from "./constants"
 import { ICoinMetrices } from "../Redux/CoinInfoReducer/CoinInfoReducer"
 
 export const getPercentageIcon = (displayName: string) => {
@@ -12,13 +12,13 @@ export const getColorClass = (activeCoin: ICoinMetrices, metrics: IMetrics) => {
     return ''
 }
 
-export const formatCryptoTableData = (res: AxiosResponse<any, any>) => {
+export const formatCryptoTableData = (res: AxiosResponse<any, any>,defaultCurrency:string) => {
     try {
         return Object.keys(res.data.DISPLAY).map(coinSymbol => {
             const { PRICE, LASTUPDATE, VOLUME24HOUR, TOTALVOLUME24HTO, TOPTIERVOLUME24HOURTO,
                 TOTALTOPTIERVOLUME24HTO, MKTCAP, OPEN24HOUR, HIGH24HOUR, LOW24HOUR,
                 CHANGE24HOUR, CHANGEPCT24HOUR, CHANGEDAY, CHANGEPCTDAY, CHANGEHOUR, CHANGEPCTHOUR }
-                = res.data.DISPLAY[coinSymbol][currentcySymbol];
+                = res.data.DISPLAY[coinSymbol][defaultCurrency];
             return {
                 coinName: coinSymbol,
                 price: PRICE,
@@ -48,5 +48,5 @@ export const formatCryptoTableData = (res: AxiosResponse<any, any>) => {
 export const getInitialPriceFromTable = (tableData:ICoinMetrices[],coinName:string) =>{
     const selectedCoinPrice = tableData.find(coin => coin.coinName === coinName)?.price;
     const numericString = selectedCoinPrice?.replace(/[^0-9.]/g, '');
-    return parseFloat(numericString!!)
+    return parseFloat(numericString!)
 }

@@ -2,6 +2,10 @@
 
 export const currentcySymbol = 'USD';
 
+export const getDefaultCurrency = () =>{
+    return sessionStorage.getItem('savedCurrency') || 'USD';
+}
+
 export const coinsTobeDisplayed = ["BTC", "ETH", "SOl", "BNB"]
 
 export const tableDataUrl = `https://min-api.cryptocompare.com/data/pricemultifull`
