@@ -4,15 +4,13 @@ import CoinInfoModal from "../../Components/CoinInfoModal/CoinInfoModal"
 import './Homepage.scss'
 import { updateSavedCurrency } from "../../Redux/TableReducer/tableActions"
 import { useDispatch } from "react-redux"
-import { setSavedCoinPrices } from "../../Redux/BookmarkReducer/bookmarkActions"
+import { resetSavedCoins, setSavedCoinPrices } from "../../Redux/BookmarkReducer/bookmarkActions"
 
 function Homepage() {
     const dispatch = useDispatch();
     const handleChange = (e:any) =>{
-        // sessionStorage.setItem('savedCurrency',e.target.value)
         dispatch(updateSavedCurrency(e.target.value))
-        dispatch(setSavedCoinPrices({}))
-        console.log(e.target.value)
+        dispatch(resetSavedCoins())
     }
     return (
         <div className="homepage">

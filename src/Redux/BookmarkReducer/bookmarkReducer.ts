@@ -1,4 +1,4 @@
-import { SAVE_COIN_PRICES, SET_BOOKMARKS } from "./bookmarkActions";
+import { RESET_COIN_VALUE, SAVE_COIN_PRICES, SET_BOOKMARKS } from "./bookmarkActions";
 
 export interface IBookmarkState{
     bookmarks:string[],
@@ -28,8 +28,15 @@ export default function bookmarkReducer(state:IBookmarkState=initState, action:I
             return {
                 ...state,
                 savedCoinValue:{
+                    ...state.savedCoinValue,
                     ...action.payload
                 }
+            }
+        }
+        case RESET_COIN_VALUE:{
+            return {
+                ...state,
+                savedCoinValue:{}
             }
         }
         default:
